@@ -4,7 +4,7 @@ This project is currently under development. The following topics have been cove
 
 # Topics :
 
-###Regression
+Regression
 
-###Classifaction
+Classifaction
 
