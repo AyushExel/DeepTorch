@@ -1,6 +1,7 @@
 '''
 You can find more PyTorch based tutoials here=> https://github.com/AyushExel/DeepTorch
-
+Dependencies:
+numpy, PyTorch 0.4
 This file contains easy to understand and well documented code for implemeting regression using
 Pytorch. There are two methods mentioned, one involves building layer architecture manually 
 while the other uses Sequential() function to ease the task
