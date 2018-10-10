@@ -31,7 +31,12 @@ class Net(torch.nn.Module):
 
 #To convert data from PIL to tensor
 transform = transforms.Compose(
-    [transforms.ToTensor()]
+    [
+     transforms.RandomHorizontalFlip(0.5),
+     transforms.RandomVerticalFlip(0.5),
+     transforms.ToTensor(),
+     transforms.Normalize((0.5,0.5,0.5),(0.5,0.5,0.5))
+    ]
     )
 
 #Load train and test set:
@@ -66,13 +71,14 @@ optimizer = torch.optim.SGD(net.parameters(),lr=0.001,momentum=0.9)
 acc = 0  #Store best accuracy
 epoch = 0 #store epochs
 #chek if there is a trained parameters present:
+'''
 if os.path.isdir('save'):
     saved_model = torch.load('./save/model.pt')
     net.load_state_dict(saved_model['params'])
     acc = saved_model['acc']
     epoch = saved_model['epoch']
     print('Saved model has accuracy of ' + str(acc))
-
+''' 
 def train_model(epochs):
     net.train() #set the model to training mode
     for epoch in range(epochs):
@@ -117,6 +123,7 @@ def accuracy():
         correctHits += (prediction==output).sum().item()
         accuracy = (correctHits/total)*100
     print('Accuracy = '+str(accuracy))
+    '''
     global acc
     if accuracy > acc: #Save the model if accuracy increases
         acc=accuracy
@@ -125,13 +132,15 @@ def accuracy():
         torch.save({'params':net.state_dict(),
                     'epoch':epoch,
                     'acc':accuracy},'./save/model.pt')
+    '''
 
 if __name__ == '__main__':
-    train_model(epoch+10)
+    train_model(2)
 
 '''
 Official Documentation:
 torchvision - https://pytorch.org/docs/stable/torchvision/transforms.html
+torchvision.tansforms - https://pytorch.org/docs/stable/torchvision/transforms.html#transforms-on-pil-image
 toch.util.data - https://pytorch.org/docs/stable/data.html
 np.transpose - https://docs.scipy.org/doc/numpy/reference/generated/numpy.transpose.html
 '''
